@@ -1,0 +1,153 @@
+Here is the **updated and refined project requirements**, incorporating the missing details:  
+
+---
+
+## **Project Requirements for Course Document Management System**  
+
+This system allows **faculty members** to upload course-related documents, **HODs** to manage and approve them, and **admins** to oversee the entire system. It supports **multiple departments**, **faculty teaching in multiple departments**, and **subjects categorized by year and semester** while maintaining a structured **semester-wise document organization** (e.g., **Jan-June, June-Dec, Mar-Aug**).  
+
+---
+
+### **1. User Roles & Permissions**  
+
+#### **1.1 Admin (Same rights as HOD for faculty management)**  
+- Can **add, update, or delete** HODs and Faculty.  
+- Can **view all documents, users, logs**, and notifications.  
+- Can **assign subjects to faculty** across all departments.  
+- Can **set submission deadlines** for subjects.  
+- **Cannot** approve or reject faculty-submitted documents (HODs do this).  
+
+#### **1.2 Head of Department (HOD)**  
+- Can **add, update, or delete** faculty members in their department.  
+- Can **assign subjects** to faculty within their department.  
+- Can **set document submission deadlines** per subject, year, and semester.  
+- Can **approve or reject** faculty-submitted documents.  
+- Can **view logs and activities** related to their department.  
+
+#### **1.3 Faculty**  
+- Can **teach in multiple departments, subjects, and semesters**.  
+- Can **submit documents** for their assigned subjects.  
+- Can **view the status** of their submitted documents.  
+- Receives **notifications** for approvals, rejections, and deadlines.  
+
+---
+
+### **2. Functional Requirements**  
+
+#### **2.1 Authentication & User Management**  
+- Secure **login and role-based authentication** (Admin, HOD, Faculty).  
+- **Admin & HOD** can **add faculty and assign subjects**.  
+- Faculty **only sees assigned subjects**.  
+
+#### **2.2 Department & Subject Management**  
+- Admin can **create and manage multiple departments**.  
+- HODs can **assign faculty to subjects** in their department.  
+- Subjects are categorized by **year (1-4) and semester (1-8)**.  
+
+#### **2.3 Document Submission & Approval**  
+- Faculty **uploads documents** for their assigned subjects.  
+- Each document is tagged with **year, semester, subject, department**.  
+- HODs **approve/reject** documents.  
+- **Approved documents are visible to Admins**.  
+- **Documents are organized semester-wise** (e.g., **Jan-June, June-Dec, Mar-Aug**).  
+
+#### **2.4 Deadline Management**  
+- **HODs & Admins can set submission deadlines** for subjects.  
+- Faculty receives **notifications about upcoming deadlines**.  
+- Late submissions are **flagged for review**.  
+
+#### **2.5 Notifications & Activity Tracking**  
+- **Notifications** for document status updates, new assignments, and deadlines.  
+- **Activity logs** track all actions (uploads, approvals, rejections, assignments).  
+
+#### **2.6 Access Control**  
+- Faculty **can only upload and view their submissions**.  
+- HODs **can manage faculty and documents in their department**.  
+- Admins **can view everything but cannot approve/reject documents**.  
+
+---
+
+### **3. Database Structure (Collections & Keys)**  
+
+#### **3.1 Users Collection** *(Stores all users: Admin, HOD, Faculty)*  
+- `_id, name, email, password, role (Admin / HOD / Faculty)`  
+- `departments (Array of department IDs for multi-department faculty)`  
+- `createdAt`  
+
+#### **3.2 Departments Collection** *(Stores department details)*  
+- `_id, name, hodId (Reference to HOD)`  
+
+#### **3.3 Subjects Collection** *(Stores subjects categorized by department, year, and semester)*  
+- `_id, name, departmentId, year, semester, assignedFacultyIds`  
+
+#### **3.4 Faculty_Assignments Collection** *(Tracks faculty assigned to subjects)*  
+- `_id, facultyId, subjectId, departmentId, year, semester`  
+
+#### **3.5 Documents Collection** *(Stores faculty document submissions, organized by semester periods)*  
+- `_id, facultyId, subjectId, departmentId, year, semester`  
+- `fileUrl, status (Pending / Approved / Rejected), hodId, submittedAt, approvedAt`  
+- `semesterPeriod (Jan-June / June-Dec / Mar-Aug)`  
+
+#### **3.6 Deadlines Collection** *(Stores submission deadlines per semester period)*  
+- `_id, subjectId, departmentId, year, semester, hodId, deadlineDate, semesterPeriod`  
+
+#### **3.7 Notifications Collection** *(Stores user notifications)*  
+- `_id, userId, message, isRead, createdAt`  
+
+#### **3.8 Activity Logs Collection** *(Tracks all actions performed in the system)*  
+- `_id, userId, actionType, details, timestamp`  
+
+---
+
+### **4. Frontend Pages & Components**  
+
+#### **4.1 Authentication Pages**  
+- **Login Page** → Users log in based on their role.  
+- **Register Page** → Only accessible to **Admin** for adding HODs & Faculty.  
+
+#### **4.2 Admin Dashboard**  
+- View all **departments, users, subjects, logs**.  
+- Create and manage **HODs & Faculty**.  
+- **Cannot approve/reject documents**.  
+
+#### **4.3 HOD Dashboard**  
+- View and manage **faculty in their department**.  
+- Assign subjects to faculty.  
+- Set **document submission deadlines**.  
+- Approve/reject **submitted documents**.  
+
+#### **4.4 Faculty Dashboard**  
+- View **assigned subjects**.  
+- Upload **documents** for each subject.  
+- See the **status of uploaded documents**.  
+
+#### **4.5 Document Management**  
+- Faculty **uploads documents** per subject, year, and semester.  
+- HODs **approve/reject documents**.  
+- Approved documents are **visible to Admins**.  
+- **Documents are organized semester-wise** (Jan-June, June-Dec, Mar-Aug).  
+
+#### **4.6 Notifications Page**  
+- Faculty receives **document status and deadline alerts**.  
+- HODs get **submission notifications**.  
+
+---
+
+### **5. Additional Features**  
+- **Responsive UI** (Mobile & Desktop friendly).  
+- **Search & Filters** (Find subjects, faculty, documents easily).  
+- **Export Data** (Admins & HODs can export reports).  
+- **Multi-Department Faculty Support** (Faculty can teach in multiple departments).  
+- **Semester-Wise Document Organization** *(Jan-June, June-Dec, Mar-Aug)*.  
+
+---
+
+### **Conclusion**  
+This system ensures:  
+✅ **Proper faculty management** (Admin & HOD rights on faculty).  
+✅ **Semester-wise document submission & approval**.  
+✅ **Deadline tracking & notifications**.  
+✅ **Structured document access based on approval workflows**.  
+
+This updated version now includes **admin and HOD having the same faculty management rights** and **semester-wise document organization**.  
+

@@ -1,0 +1,70 @@
+# Started on: 23-mar-2025
+
+Tech-used = [ "Next.js", "Tailwindcss", "MongoDb" ]
+
+
+# Example structure for now: (maybe changed later)
+/islec-course-files 
+│── /app  
+│   │── /(auth)               # Authentication-related pages  
+│   │   │── /login            # Login page  
+│   │   │   ├─ page.js  
+│   │   │── /register         # (If you have admin-controlled registrations)  
+│   │   │   ├─ page.js  
+│   │── /dashboard            # Common Dashboard layout  
+│   │   │── layout.js        # Shared layout for dashboards  
+│   │   │── /admin  
+│   │   │   ├─ page.js       # Admin Dashboard  
+│   │   │── /hod  
+│   │   │   ├─ page.js       # HOD Dashboard  
+│   │   │── /faculty  
+│   │   │   ├─ page.js       # Faculty Dashboard  
+│   │── /documents            # Document management pages  
+│   │   │── /upload  
+│   │   │   ├─ page.js       # Upload document page  
+│   │   │── /review  
+│   │   │   ├─ page.js       # HOD’s review page  
+│   │── /settings  
+│   │   │── page.js          # User settings  
+│   │── /notifications  
+│   │   │── page.js          # Notifications page  
+│   │── layout.js             # Main layout  
+│   │── page.js               # Home page (redirect to login or dashboard)  
+│   │── global.css            # Global styles  
+│  
+│── /components  
+│   │── /ui                   # Reusable UI components  
+│   │   ├─ Button.js  
+│   │   ├─ Input.js  
+│   │   ├─ Modal.js  
+│   │── Sidebar.js           # Sidebar navigation  
+│   │── Navbar.js            # Top navbar  
+│   │── DashboardCard.js     # Cards for dashboard stats  
+│   │── DocumentList.js      # Document listing component  
+│  
+│  
+│── /models                   # MongoDB Models (if using Mongoose)  
+│   │── users.js  
+│   │── departments.js  
+│   │── subjects.js  
+│   │── documents.js  
+│  
+│── /public                   # Static assets (logos, images, etc.)  
+│   │── logo.png  
+│  
+│── /styles                   # Custom styles (if needed)  
+│   │── auth.css              # Authentication-specific styles  
+│   │── dashboard.css         # Dashboard styles  
+│  
+│── /config                   # Configuration files  
+│   │── db.js                 # MongoDB connection setup  
+│   │── authConfig.js         # Authentication settings  
+│  
+│── /middleware               # Middleware files  
+│   │── authMiddleware.js     # Protect routes based on roles  
+│  
+│── /package.json  
+│── /tailwind.config.js       # Tailwind CSS config  
+│── /next.config.js           # Next.js config  
+│── /postcss.config.js        # PostCSS config  
+│── /.gitignore  
