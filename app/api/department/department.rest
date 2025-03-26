@@ -1,0 +1,36 @@
+### Create Department (POST)
+POST http://localhost:3000/api/department
+Content-Type: application/json
+
+{
+  "name": "IT",
+  "hod": "",
+  "faculty": []
+}
+
+### Update Department (PUT)
+PUT http://localhost:3000/api/department
+Content-Type: application/json
+
+{
+  "departmentId": "67e45e038fec4f258ba30e38",
+  "name": "AIDS",
+  "hod": "67e45ff88fec4f258ba30e65",
+  "faculty": ["67e460698fec4f258ba30e71", "67e45e038fec4f258ba30e38"]
+}
+
+### Delete Department (DELETE)
+DELETE http://localhost:3000/api/department
+Content-Type: application/json
+
+{
+  "departmentId": "67e4532dd7b2736a7b3620c6"
+}
+
+### Fetch All Departments (GET)
+GET http://localhost:3000/api/department
+Content-Type: application/json
+
+### Fetch a Single Department by ID
+GET http://localhost:3000/api/department?departmentId=67e45e038fec4f258ba30e38
+Content-Type: application/json

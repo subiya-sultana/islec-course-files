@@ -1,0 +1,41 @@
+### Create User (POST)
+POST http://localhost:3000/api/user
+Content-Type: application/json
+
+{
+  "name": "Ahad sir",
+  "email": "ahad@example.com",
+  "password": "securepassword",
+  "role": "faculty",
+  "departments": ["67e45e188fec4f258ba30e3e", "67e45e038fec4f258ba30e38"]
+}
+
+### Update User (PUT)
+PUT http://localhost:3000/api/user
+Content-Type: application/json
+
+{
+  "userId": "67e45e8a8fec4f258ba30e4a",
+  "name": "Subiya",
+  "email": "subiya@example.com",
+  "password": "securepassword",
+  "role": "ADMIN",
+  "departments": ["67e4532dd7b2736a7b3620c6", "67e45e0f8fec4f258ba30e3b", "67e45e188fec4f258ba30e3e"]
+}
+
+### Delete User (DELETE)
+DELETE http://localhost:3000/api/user
+Content-Type: application/json
+
+{
+  "userId": "67e45e8a8fec4f258ba30e4a"
+}
+
+### Fetch All Users (GET)
+GET http://localhost:3000/api/user
+Content-Type: application/json
+
+### Fetch a single user by ID
+GET http://localhost:3000/api/user?userId=67e45f598fec4f258ba30e58
+
+Content-Type: application/json

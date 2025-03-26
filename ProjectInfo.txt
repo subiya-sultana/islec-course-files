@@ -2,6 +2,17 @@
 
 Tech-used = [ "Next.js", "Tailwindcss", "MongoDb" ]
 
+Tech-used{
+    "Next.js" : "As a framework",
+    "Tailwindcss" : "For styling",
+    "MongoDb": "As a database",
+    "bcryptjs" : "For password hashing",
+    "jsonwebtoken" : "JWT authentication",
+
+}
+
+
+
 
 # Example structure for now: (maybe changed later)
 /islec-course-files 
@@ -11,6 +22,7 @@ Tech-used = [ "Next.js", "Tailwindcss", "MongoDb" ]
 │   │   │   ├─ page.js  
 │   │   │── /register         # (If you have admin-controlled registrations)  
 │   │   │   ├─ page.js  
+│   │── /api  
 │   │── /dashboard            # Common Dashboard layout  
 │   │   │── layout.js        # Shared layout for dashboards  
 │   │   │── /admin  
