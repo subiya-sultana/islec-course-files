@@ -1,14 +1,11 @@
-# Started on: 23-mar-2025
+# Started on: 23-mar-2025 
 
-Tech-used = [ "Next.js", "Tailwindcss", "MongoDb" ]
-
-Tech-used{
+Tech_used{
     "Next.js" : "As a framework",
     "Tailwindcss" : "For styling",
     "MongoDb": "As a database",
     "bcryptjs" : "For password hashing",
     "jsonwebtoken" : "JWT authentication",
-
 }
 
 

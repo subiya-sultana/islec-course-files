@@ -1,0 +1,40 @@
+### CREATE SUBJECT
+POST http://localhost:3000/api/subject
+Content-Type: application/json
+
+{
+  "name": "Data Structures again",
+  "code": "CS101",
+  "semester": 3,
+  "year": 2,
+  "department": "67e45e038fec4f258ba30e38",
+  "faculty": ["67e460698fec4f258ba30e71"]
+}
+
+### UPDATE SUBJECT
+PUT http://localhost:3000/api/subject
+Content-Type: application/json
+
+{
+  "subjectId": "67e74cb3bf34b8a31723feb1",
+  "name": "Advanced Data Structures",
+  "code": "CS501",
+  "semester": 5,
+  "year": 3,
+  "department": "67e45e038fec4f258ba30e38",
+  "faculty": ["67e45e038fec4f258ba30e38"]
+}
+
+### DELETE SUBJECT
+DELETE http://localhost:3000/api/subject
+Content-Type: application/json
+
+{
+  "subjectId": "67e74d68bf34b8a31723feb9"
+}
+
+### FETCH ALL SUBJECTS
+GET http://localhost:3000/api/subject
+
+### FETCH SINGLE SUBJECT
+GET http://localhost:3000/api/subject?subjectId=67e4d3b29653ef9f46bc028f
