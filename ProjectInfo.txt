@@ -22,12 +22,8 @@ Tech_used{
 │   │── /api  
 │   │── /dashboard            # Common Dashboard layout  
 │   │   │── layout.js        # Shared layout for dashboards  
-│   │   │── /admin  
-│   │   │   ├─ page.js       # Admin Dashboard  
-│   │   │── /hod  
-│   │   │   ├─ page.js       # HOD Dashboard  
-│   │   │── /faculty  
-│   │   │   ├─ page.js       # Faculty Dashboard  
+│   │   │── /role  
+│   │   │   ├─ page.js       # Admin Dashboard   
 │   │── /documents            # Document management pages  
 │   │   │── /upload  
 │   │   │   ├─ page.js       # Upload document page  

@@ -1,0 +1,29 @@
+### Admin Login
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+  "email": "subiya@example.com",
+  "password": "securepassword",
+  "role": "admin"
+}
+
+### HOD Login
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+  "email": "mazhar@example.com",
+  "password": "securepassword",
+  "role": "hod"
+}
+
+### Faculty Login
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+  "email": "ahad@example.com",
+  "password": "securepassword",
+  "role": "faculty"
+}

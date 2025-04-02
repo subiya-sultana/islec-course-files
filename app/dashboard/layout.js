@@ -1,8 +1,10 @@
-export default function Layout({ children }){
-    return(
+"use client";
+
+export default function Layout({ children }) {
+    return (
         <>
             <h1>Dashboard Layout</h1>
             {children}
         </>
-    )
+    );
 }
