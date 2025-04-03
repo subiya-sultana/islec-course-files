@@ -1,5 +1,10 @@
 # Started on: 23-mar-2025 
 
+NOW:
+1. cross check code, add comments, see console.login
+2. try login for different faculties
+3. install dashboards
+
 Tech_used{
     "Next.js" : "As a framework",
     "Tailwindcss" : "For styling",
@@ -20,10 +25,20 @@ Tech_used{
 │   │   │── /register         # (If you have admin-controlled registrations)  
 │   │   │   ├─ page.js  
 │   │── /api  
-│   │── /dashboard            # Common Dashboard layout  
-│   │   │── layout.js        # Shared layout for dashboards  
-│   │   │── /role  
-│   │   │   ├─ page.js       # Admin Dashboard   
+/dashboard
+│── layout.js               # Shared layout for all dashboards
+│── /[role]                 # Dynamic Role-Based Dashboards
+│   ├── page.js             # Main dashboard page (Faculty, HOD, etc.)
+│   ├── /faculty            # Faculty-specific pages
+│   │   ├── assignments
+│   │   │   ├── page.js     # Faculty Assignments Page
+│   │   ├── tasks
+│   │   │   ├── page.js     # Faculty Tasks Page
+│   ├── /hod               # HOD-specific pages
+│   │   ├── manage-faculty
+│   │   │   ├── page.js     # HOD Manage Faculty Page
+│   │   ├── manage-department
+│   │   │   ├── page.js     # HOD Manage Department Page
 │   │── /documents            # Document management pages  
 │   │   │── /upload  
 │   │   │   ├─ page.js       # Upload document page  

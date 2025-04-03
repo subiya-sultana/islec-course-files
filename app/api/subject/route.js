@@ -71,8 +71,8 @@ export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const subjectId = searchParams.get("subjectId");
 
+  // Fetch a single subject by ID
   if (subjectId) {
-    // Fetch a single subject by ID
     const subject = await Subject.findById(subjectId)
       .populate("department")
       .populate("faculty");

@@ -104,7 +104,7 @@ export async function GET(req) {
 	const { searchParams } = new URL(req.url);
 	const userId = searchParams.get("userId");
 
-	// fetch single user
+	// fetch single user by userId
 	if (userId) {
 		const user = await User.findById(userId).populate("departments", "name").select("-password");
 		if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
