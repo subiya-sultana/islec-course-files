@@ -4,6 +4,8 @@ NOW:
 1. cross check code, add comments, see console.login
 2. try login for different faculties
 3. install dashboards
+4. forgotten password
+5. change password
 
 Tech_used{
     "Next.js" : "As a framework",

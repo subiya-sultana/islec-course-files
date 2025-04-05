@@ -1,113 +1,202 @@
-"use client"
+// "use client";
+// import { useState } from "react";
+// import axios from "axios";
+// import { Mail, Eye, EyeOff, Lock, User } from "lucide-react";
+// import { useRouter } from "next/navigation";
+// import Cookies from "js-cookie";
+// import { toast } from "react-hot-toast";
+
+// export default function Login() {
+//     const router = useRouter();
+//     const [showPassword, setShowPassword] = useState(false);
+//     const [formData, setFormData] = useState({ email: "", password: "", role: "FACULTY" });
+//     const [loading, setLoading] = useState(false);
+
+//     const handleChange = (e) => {
+//         const { name, value } = e.target;
+//         setFormData((prev) => ({ ...prev, [name]: value }));
+//     };
+
+//     const handleLogin = async (e) => {
+//         e.preventDefault();
+//         setLoading(true);
+//         try {
+//             const response = await axios.post("/api/login", formData);
+//             const { token, role } = response.data;
+//             if (!token || !role) throw new Error("Invalid response from server");
+//             Cookies.set("token", token);
+//             toast.success("Login successful!");
+//             router.push(`/dashboard/${role.toLowerCase()}`);
+//         } catch (err) {
+//             toast.error(err.response?.data?.error || "Login failed");
+//         } finally {
+//             setLoading(false);
+//         }
+//     };
+
+//     return (
+//         <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-slate-200">
+//             <h1 className="text-2xl font-bold text-center">Login to Your Account</h1>
+//             <form onSubmit={handleLogin} className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+//                 <div className="mb-4 relative">
+//                     <Mail className="absolute left-3 top-3 text-gray-400" size={20} />
+//                     <input
+//                         type="email"
+//                         name="email"
+//                         placeholder="Email"
+//                         className="border p-2 pl-10 w-full rounded"
+//                         required
+//                         value={formData.email}
+//                         onChange={handleChange}
+//                     />
+//                 </div>
+//                 <div className="mb-4 relative">
+//                     <Lock className="absolute left-3 top-3 text-gray-400" size={20} />
+//                     <input
+//                         type={showPassword ? "text" : "password"}
+//                         name="password"
+//                         placeholder="Password"
+//                         className="border p-2 pl-10 w-full rounded"
+//                         required
+//                         value={formData.password}
+//                         onChange={handleChange}
+//                     />
+//                     <button type="button" className="absolute right-3 top-3 text-gray-500" onClick={() => setShowPassword(!showPassword)}>
+//                         {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+//                     </button>
+//                 </div>
+//                 <div className="mb-4 relative">
+//                     <User className="absolute left-3 top-3 text-gray-400" size={20} />
+//                     <select name="role" className="border p-2 pl-10 w-full rounded" value={formData.role} onChange={handleChange}>
+//                         <option value="ADMIN">Admin</option>
+//                         <option value="HOD">HOD</option>
+//                         <option value="FACULTY">Faculty</option>
+//                     </select>
+//                 </div>
+//                 <button className="bg-green-600 text-white px-4 py-2 rounded w-full hover:bg-green-700" type="submit" disabled={loading}>
+//                     {loading ? "Logging in..." : "Login"}
+//                 </button>
+//             </form>
+//         </div>
+//     );
+// }
+
+"use client";
 import { useState } from "react";
 import axios from "axios";
-import { Mail, Eye, EyeOff, Lock } from "lucide-react";
+import Cookies from "js-cookie";
+import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import Cookies from 'js-cookie';
+import Link from "next/link";
 
 export default function Login() {
   const router = useRouter();
-  const [showPassword, setShowPassword] = useState({
-    Admin: false,
-    HOD: false,
-    Faculty: false,
-  });
-  const [formData, setFormData] = useState({
-    Admin: { email: "", password: "" },
-    HOD: { email: "", password: "" },
-    Faculty: { email: "", password: "" },
-  });
-  const [loading, setLoading] = useState({ Admin: false, HOD: false, Faculty: false });
-  const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({ email: "", password: "", role: "FACULTY" });
+  const [loading, setLoading] = useState(false);
 
-  const togglePasswordVisibility = (role) => {
-    setShowPassword((prev) => ({
-      ...prev,
-      [role]: !prev[role],
-    }));
-  };
-
-  const handleChange = (e, role) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [role]: { ...prev[role], [name]: value },
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleLogin = async (role) => {
-    setLoading((prev) => ({ ...prev, [role]: true }));
-    setError(null);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
     try {
-        const response = await axios.post("/api/login", {
-            ...formData[role],
-            role,
-        });
-
-        const { token, role: userRole } = response.data;
-    alert(`Login successful: ${response.data.role}`);
-    console.log(response.data);
-
-    Cookies.set("token", token); // Set token in cookies
-    router.push(`/dashboard/${userRole.toLowerCase()}`);
-      console.log("Router push executed");
-
+      const response = await axios.post("/api/login", formData);
+      const { token, role } = response.data;
+      if (!token || !role) throw new Error("Invalid response from server");
+      Cookies.set("token", token);
+      toast.success("Login successful!");
+      router.push(`/dashboard/${role.toLowerCase()}`);
     } catch (err) {
-        setError(err.response?.data?.error || "Login failed");
+      toast.error(err.response?.data?.error || "Login failed");
     } finally {
-        setLoading((prev) => ({ ...prev, [role]: false }));
+      setLoading(false);
     }
-};
+  };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 gap-8 bg-slate-200">
-      <h1 className="text-2xl font-bold text-center">Please Login First To Continue..</h1>
-      {error && <p className="text-red-600">{error}</p>}
-      <div className="flex justify-center items-center w-full">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full max-w-4xl">
-          {["Admin", "HOD", "Faculty"].map((role) => (
-            <div key={role} className="border border-gray-400 bg-white p-4 sm:p-6 rounded-lg shadow-lg text-center flex flex-col items-center w-full max-w-xs mx-auto">
-              <h2 className="text-lg font-semibold mb-4 text-gray-600">{role} Login</h2>
-              <div className="relative w-full mb-2">
-                <Mail className="absolute left-3 top-3 text-gray-400" size={20} />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  className="border border-gray-300 p-2 pl-10 w-full rounded"
-                  required
-                  value={formData[role].email}
-                  onChange={(e) => handleChange(e, role)}
-                />
+    <div className="container-xxl">
+      <div className="authentication-wrapper authentication-basic container-p-y">
+        <div className="authentication-inner w-100" style={{ maxWidth: "420px", margin: "0 auto" }}>
+          <div className="card">
+            <div className="card-body">
+              <div className="app-brand justify-content-center mb-4">
+                <Link href="/" className="app-brand-link gap-2">
+                  <span className="app-brand-text demo text-body fw-bolder">MyApp</span>
+                </Link>
               </div>
-              <div className="relative w-full mb-4">
-                <Lock className="absolute left-3 top-3 text-gray-400" size={20} />
-                <input
-                  type={showPassword[role] ? "text" : "password"}
-                  name="password"
-                  placeholder="Password"
-                  className="border border-gray-300 p-2 pl-10 w-full rounded"
-                  required
-                  value={formData[role].password}
-                  onChange={(e) => handleChange(e, role)}
-                />
-                <button
-                  type="button"
-                  className="absolute right-3 top-3 text-gray-500"
-                  onClick={() => togglePasswordVisibility(role)}
-                >
-                  {showPassword[role] ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
-              </div>
-              <button
-                className="bg-green-600 text-white px-4 py-2 rounded w-full cursor-pointer hover:bg-green-700"
-                onClick={() => handleLogin(role)}
-                disabled={loading[role]}
-              >
-                {loading[role] ? "Logging in..." : "Login"}
-              </button>
+
+              <h4 className="mb-2">Welcome back! 👋</h4>
+              <p className="mb-4">Please sign-in to your account</p>
+
+              <form onSubmit={handleLogin} className="mb-3">
+                <div className="mb-3">
+                  <label htmlFor="email" className="form-label">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="form-control"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="mb-1 form-password-toggle">
+                  <label className="form-label" htmlFor="password">Password</label>
+                  <div className="input-group input-group-merge">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      name="password"
+                      className="form-control"
+                      placeholder="••••••••"
+                      value={formData.password}
+                      onChange={handleChange}
+                      required
+                    />
+                    <span className="input-group-text cursor-pointer text-primary" onClick={() => setShowPassword(!showPassword)}>
+                      {/* <i className={`bx ${showPassword ? "bx-hide" : "bx-show"}`}></i> */}
+                    </span>
+                  </div>
+                  <div className="d-flex justify-content-end mt-1">
+                    <Link href="/forgot-password" className="small text-primary">Forgot password?</Link>
+                  </div>
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label" htmlFor="role">Role</label>
+                  <select
+                    name="role"
+                    id="role"
+                    className="form-select"
+                    value={formData.role}
+                    onChange={handleChange}
+                  >
+                    <option value="ADMIN">Admin</option>
+                    <option value="HOD">HOD</option>
+                    <option value="FACULTY">Faculty</option>
+                  </select>
+                </div>
+
+                <div className="mb-3">
+                  <button className="btn btn-primary w-100" type="submit" disabled={loading}>
+                    {loading ? "Logging in..." : "Sign in"}
+                  </button>
+                </div>
+              </form>
+
+              <p className="text-center">
+                <span>New here?</span>
+                <Link href="/register"><span>&nbsp;Create an account</span></Link>
+              </p>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </div>
