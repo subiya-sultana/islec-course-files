@@ -57,8 +57,6 @@ class Menu {
       // Find top parent element
       if (e.target.closest('ul') && e.target.closest('ul').classList.contains('menu-inner')) {
         const menuItem = Menu._findParent(e.target, 'menu-item', false)
-
-        // eslint-disable-next-line prefer-destructuring
         if (menuItem) this._topParent = menuItem.childNodes[0]
       }
 
@@ -68,7 +66,6 @@ class Menu {
 
       if (toggleLink) {
         e.preventDefault()
-
         if (toggleLink.getAttribute('data-hover') !== 'true') {
           this.toggle(toggleLink)
         }
@@ -211,16 +208,16 @@ class Menu {
             window.requestAnimationFrame(() => this._toggleAnimation(true, item, false))
             if (this._accordion) this._closeOther(item, closeChildren)
           } else if (this._animate) {
-            // eslint-disable-next-line no-unused-expressions
+            
             this._onOpened && this._onOpened(this, item, toggleLink, Menu._findMenu(item))
           } else {
             item.classList.add('open')
-            // eslint-disable-next-line no-unused-expressions
+            
             this._onOpened && this._onOpened(this, item, toggleLink, Menu._findMenu(item))
             if (this._accordion) this._closeOther(item, closeChildren)
           }
         } else {
-          // eslint-disable-next-line no-unused-expressions
+          
           this._onOpened && this._onOpened(this, item, toggleLink, Menu._findMenu(item))
         }
       })
@@ -246,11 +243,11 @@ class Menu {
               for (let i = 0, l = opened.length; i < l; i++) opened[i].classList.remove('open')
             }
 
-            // eslint-disable-next-line no-unused-expressions
+           
             this._onClosed && this._onClosed(this, item, toggleLink, Menu._findMenu(item))
           }
         } else {
-          // eslint-disable-next-line no-unused-expressions
+         
           this._onClosed && this._onClosed(this, item, toggleLink, Menu._findMenu(item))
         }
       })
