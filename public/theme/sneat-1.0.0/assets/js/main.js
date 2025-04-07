@@ -4,22 +4,7 @@
 
 'use strict';
 
-let animate;
-let menu; // Ensure this is declared only once
-
-(function () {
-  // Initialize menu
-  //-----------------
-  let layoutMenuEl = document.querySelectorAll('#layout-menu');
-  layoutMenuEl.forEach(function (element) {
-    menu = new Menu(element, {
-      orientation: 'vertical',
-      closeChildren: false
-    });
-    // Change parameter to true if you want scroll animation
-    window.Helpers.scrollToActive((animate = false));
-    window.Helpers.mainMenu = menu;
-  });
+let menu, animate;
 
 (function () {
   // Initialize menu

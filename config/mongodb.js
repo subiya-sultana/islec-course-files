@@ -8,10 +8,7 @@ if (!MONGODB_URI) {
 
 const connectDB = async () => {
   if (mongoose.connection.readyState >= 1) return;
-  await mongoose.connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(MONGODB_URI); // Removed deprecated options
   console.log("MongoDB connected.");
 };
 
