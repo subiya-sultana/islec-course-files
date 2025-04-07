@@ -1,4 +1,3 @@
-// src/pages/ForgotPassword.jsx
 import Head from "next/head";
 import React from "react";
 
@@ -17,7 +16,7 @@ const ForgotPassword = () => {
                             <div className="card-body text-center">
                                 <h4 className="mb-2">Forgot Password? 🔒</h4>
                                 <p className="mb-4">
-                                    Enter your email and we'll send you instructions to reset your password
+                                    Enter your email and we will send you instructions to reset your password
                                 </p>
                                 <form className="mb-3">
                                     <div className="mb-3 text-start">

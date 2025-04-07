@@ -28,15 +28,16 @@ export default function RootLayout({ children }) {
         {children}
 
         {/* theme related scripts */}
-        <script src="/theme/sneat-1.0.0/assets/js/config.js"></script>
-        <script src="/theme/sneat-1.0.0/assets/vendor/libs/jquery/jquery.js"></script>
-        <script src="/theme/sneat-1.0.0/assets/vendor/libs/popper/popper.js"></script>
-        <script src="/theme/sneat-1.0.0/assets/vendor/js/bootstrap.js"></script>
-        <script src="/theme/sneat-1.0.0/assets/js/helpers.js"></script>
-        <script src="/theme/sneat-1.0.0/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-        <script src="/theme/sneat-1.0.0/assets/vendor/js/menu.js"></script>
-        <script src="/theme/sneat-1.0.0/assets/js/main.js"></script>
+        <Script src="/theme/sneat-1.0.0/assets/js/config.js" strategy="beforeInteractive" />
+        <Script src="/theme/sneat-1.0.0/assets/vendor/libs/jquery/jquery.js" strategy="beforeInteractive" />
+        <Script src="/theme/sneat-1.0.0/assets/vendor/libs/popper/popper.js" strategy="beforeInteractive" />
+        <Script src="/theme/sneat-1.0.0/assets/vendor/js/bootstrap.js" strategy="beforeInteractive" />
+        <Script src="/theme/sneat-1.0.0/assets/js/helpers.js" strategy="beforeInteractive" />
+        <Script src="/theme/sneat-1.0.0/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js" strategy="afterInteractive" />
+        <Script src="/theme/sneat-1.0.0/assets/vendor/js/menu.js" strategy="afterInteractive" />
+        <Script src="/theme/sneat-1.0.0/assets/js/main.js" strategy="afterInteractive" />
       </body>
+
     </html>
   );
 }
