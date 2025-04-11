@@ -27,19 +27,6 @@ export default function Navbar() {
           {/* /Search */}
   
           <ul className="navbar-nav flex-row align-items-center ms-auto">
-            {/* GitHub Star Button */}
-            <li className="nav-item lh-1 me-3">
-              <a
-                className="github-button"
-                href="https://github.com/themeselection/sneat-html-admin-template-free"
-                data-icon="octicon-star"
-                data-size="large"
-                data-show-count="true"
-                aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
-              >
-                Star
-              </a>
-            </li>
   
             {/* User Dropdown */}
             <li className="nav-item navbar-dropdown dropdown-user dropdown">
@@ -50,7 +37,7 @@ export default function Navbar() {
               >
                 <div className="avatar avatar-online">
                   <img
-                    src="../assets/img/avatars/1.png"
+                    src="/theme/sneat-1.0.0/assets/img/avatars/5.png"
                     alt=""
                     className="w-px-40 h-auto rounded-circle"
                   />
@@ -63,15 +50,15 @@ export default function Navbar() {
                       <div className="flex-shrink-0 me-3">
                         <div className="avatar avatar-online">
                           <img
-                            src="../assets/img/avatars/1.png"
+                            src="/theme/sneat-1.0.0/assets/img/avatars/5.png"
                             alt=""
                             className="w-px-40 h-auto rounded-circle"
                           />
                         </div>
                       </div>
                       <div className="flex-grow-1">
-                        <span className="fw-semibold d-block">John Doe</span>
-                        <small className="text-muted">Admin</small>
+                        <span className="fw-semibold d-block">Username</span>
+                        <small className="text-muted">Admin[role]</small>
                       </div>
                     </div>
                   </a>
@@ -94,8 +81,8 @@ export default function Navbar() {
                 <li>
                   <a className="dropdown-item" href="#">
                     <span className="d-flex align-items-center align-middle">
-                      <i className="flex-shrink-0 bx bx-credit-card me-2"></i>
-                      <span className="flex-grow-1 align-middle">Billing</span>
+                      <i className="flex-shrink-0 bx bx-bell me-2"></i>
+                      <span className="flex-grow-1 align-middle">Notification</span>
                       <span className="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">
                         4
                       </span>

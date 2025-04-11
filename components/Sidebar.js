@@ -81,6 +81,8 @@ export default function Sidebar() {
             </a>
           </li>
 
+          {/* <li class="menu-header small text-uppercase"><span class="menu-header-text">Manage Staff</span></li> */}
+
           <li className="menu-item">
             <a href="#" className="menu-link menu-toggle" onClick={(e) => e.preventDefault()}>
               <i className="menu-icon tf-icons bx bx-layout"></i>
@@ -105,6 +107,14 @@ export default function Sidebar() {
               </li>
             </ul>
           </li>
+
+          <li className="menu-item">
+            <a href="index.html" className="menu-link">
+              <i className="menu-icon tf-icons bx bx-home-circle"></i>
+              <div data-i18n="Analytics">Manage Departments</div>
+            </a>
+          </li>
+
         </ul>
 
 
