@@ -1,109 +1,101 @@
-/* eslint-disable @next/next/no-img-element */
-export default function Navbar() {
-    return (
-      <nav
-        className="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-        id="layout-navbar"
-      >
-        <div className="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-          <a className="nav-item nav-link px-0 me-xl-4" href="#" onClick={(e) => e.preventDefault()}>
-            <i className="bx bx-menu bx-sm"></i>
-          </a>
+"use client";
+
+import { useState } from "react";
+import { Menu } from "lucide-react";
+import { useUser } from "@/app/context/UserContext";
+import { useRouter } from "next/navigation";
+
+const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const { user, setUser } = useUser(); // assuming your context provides setUser
+  const router = useRouter();
+
+  const handleLogout = () => {
+    console.log("Logging out...");
+    localStorage.removeItem("token");
+    setUser(null);
+    router.push("/login");
+  };
+
+  return (
+    <nav className="flex items-center justify-between px-4 py-3 bg-blue-50 shadow-md relative">
+      {/* Left: Toggle & Logo */}
+      <div className="flex items-center gap-3">
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="text-gray-600 hover:text-gray-900 focus:outline-none"
+        >
+          <Menu className="w-6 h-6" />
+        </button>
+        <div className="text-lg font-bold text-blue-600">CourseFlies</div>
+      </div>
+
+      {/* Right: User & Notifications */}
+      <div className="flex items-center gap-5 ml-auto">
+        <div className="relative text-xl text-gray-700 cursor-pointer">
+          <i className="bx bx-message-dots"></i>
         </div>
-  
-        <div className="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-          {/* Search */}
-          <div className="navbar-nav align-items-center">
-            <div className="nav-item d-flex align-items-center">
-              <i className="bx bx-search fs-4 lh-0"></i>
-              <input
-                type="text"
-                className="form-control border-0 shadow-none"
-                placeholder="Search..."
-                aria-label="Search..."
-              />
-            </div>
+
+        <div className="relative text-xl text-gray-700 cursor-pointer">
+          <i className="bx bx-bell"></i>
+          <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">1</span>
+        </div>
+
+        {user && (
+          <div className="hidden sm:flex flex-col text-right">
+            <span className="text-xs font-medium">{user.name}</span>
+            <span className="text-[10px] text-gray-500">{user.role}</span>
           </div>
-          {/* /Search */}
-  
-          <ul className="navbar-nav flex-row align-items-center ms-auto">
-  
-            {/* User Dropdown */}
-            <li className="nav-item navbar-dropdown dropdown-user dropdown">
-              <a
-                className="nav-link dropdown-toggle hide-arrow"
-                href="javascript:void(0);"
-                data-bs-toggle="dropdown"
-              >
-                <div className="avatar avatar-online">
-                  <img
-                    src="/theme/sneat-1.0.0/assets/img/avatars/5.png"
-                    alt=""
-                    className="w-px-40 h-auto rounded-circle"
-                  />
-                </div>
-              </a>
-              <ul className="dropdown-menu dropdown-menu-end">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    <div className="d-flex">
-                      <div className="flex-shrink-0 me-3">
-                        <div className="avatar avatar-online">
-                          <img
-                            src="/theme/sneat-1.0.0/assets/img/avatars/5.png"
-                            alt=""
-                            className="w-px-40 h-auto rounded-circle"
-                          />
-                        </div>
-                      </div>
-                      <div className="flex-grow-1">
-                        <span className="fw-semibold d-block">Username</span>
-                        <small className="text-muted">Admin[role]</small>
-                      </div>
+        )}
+
+        <div className="relative">
+          <div
+            onClick={() => setShowDropdown(!showDropdown)}
+            className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center cursor-pointer text-lg text-gray-600"
+          >
+            <i className="bx bx-user"></i>
+          </div>
+
+          {showDropdown && (
+            <ul className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
+              {user && (
+                <li className="px-4 py-2 hover:bg-gray-100">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-gray-200 flex items-center justify-center rounded-full text-gray-600">
+                      <i className="bx bx-user text-lg"></i>
                     </div>
-                  </a>
+                    <div>
+                      <p className="text-sm font-semibold">{user.name}</p>
+                      <p className="text-xs text-gray-500">{user.role}</p>
+                    </div>
+                  </div>
                 </li>
-                <li>
-                  <div className="dropdown-divider"></div>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    <i className="bx bx-user me-2"></i>
-                    <span className="align-middle">My Profile</span>
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    <i className="bx bx-cog me-2"></i>
-                    <span className="align-middle">Settings</span>
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    <span className="d-flex align-items-center align-middle">
-                      <i className="flex-shrink-0 bx bx-bell me-2"></i>
-                      <span className="flex-grow-1 align-middle">Notification</span>
-                      <span className="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">
-                        4
-                      </span>
-                    </span>
-                  </a>
-                </li>
-                <li>
-                  <div className="dropdown-divider"></div>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="auth-login-basic.html">
-                    <i className="bx bx-power-off me-2"></i>
-                    <span className="align-middle">Log Out</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            {/* /User Dropdown */}
-          </ul>
+              )}
+              <li className="border-t px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <i className="bx bx-user mr-2"></i> My Profile
+              </li>
+              <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <i className="bx bx-cog mr-2"></i> Settings
+              </li>
+              <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <div className="flex justify-between">
+                  <span><i className="bx bx-bell mr-2"></i> Notifications</span>
+                  <span className="bg-red-500 text-white text-xs px-2 rounded-full">4</span>
+                </div>
+              </li>
+              <li
+                onMouseDown={handleLogout}
+                className="border-t px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-600"
+              >
+                <i className="bx bx-power-off mr-2"></i> Log Out
+              </li>
+            </ul>
+          )}
         </div>
-      </nav>
-    );
-  }
-  
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;

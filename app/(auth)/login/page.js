@@ -1,4 +1,3 @@
-// User login page
 "use client";
 import { useState } from "react";
 import axios from "axios";
@@ -28,7 +27,7 @@ export default function Login() {
       if (!token || !role) throw new Error("Invalid response from server");
       Cookies.set("token", token);
       toast.success("Login successful!");
-      router.push(`/dashboard/${role.toLowerCase()}`);
+      router.push(`/${role.toLowerCase()}`);
     } catch (err) {
       toast.error(err.response?.data?.error || "Login failed");
     } finally {
@@ -41,93 +40,85 @@ export default function Login() {
       <Head>
         <title>Course Files - Login</title>
       </Head>
-    
-      <div className="container-xxl">
-        <div className="authentication-wrapper authentication-basic container-p-y">
-          <div className="authentication-inner w-100" style={{ maxWidth: "420px", margin: "0 auto" }}>
-            <div className="card">
-              <div className="card-body">
 
-                {/* <div className="app-brand justify-content-center mb-4">
-                  <Link href="/" className="app-brand-link gap-2">
-                    <span className="app-brand-text demo text-body fw-bolder">MyApp</span>
-                  </Link>
-                </div> */}
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+        <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
+          <h2 className="text-2xl font-bold mb-2 text-center">Hello There! 👋</h2>
+          <p className="mb-6 text-center text-gray-600">Please sign-in to your account</p>
 
-                <h4 className="mb-2">Hello There! 👋</h4>
-                <p className="mb-4">Please sign-in to your account</p>
+          <form onSubmit={handleLogin}>
+            <div className="mb-4">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-                <form onSubmit={handleLogin} className="mb-3">
-                  <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      className="form-control"
-                      placeholder="Enter your email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-
-                  <div className="mb-1 form-password-toggle">
-                    <label className="form-label" htmlFor="password">Password</label>
-                    <div className="input-group input-group-merge">
-                      <input
-                        type={showPassword ? "text" : "password"}
-                        id="password"
-                        name="password"
-                        className="form-control"
-                        placeholder="••••••••"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                      />
-                      <span className="input-group-text cursor-pointer text-primary" onClick={() => setShowPassword(!showPassword)}>
-                        <i className={`bx ${showPassword ? "bx-hide" : "bx-show"} text-muted`}></i>
-                      </span>
-
-                    </div>
-                    <div className="d-flex justify-content-end mt-1">
-                      <Link href="/forgot-password" className="small text-primary">Forgot password?</Link>
-                    </div>
-                  </div>
-
-                  <div className="mb-3">
-                    <label className="form-label" htmlFor="role">Role</label>
-                    <select
-                      name="role"
-                      id="role"
-                      className="form-select"
-                      value={formData.role}
-                      onChange={handleChange}
-                    >
-                      <option value="ADMIN">Admin</option>
-                      <option value="HOD">HOD</option>
-                      <option value="FACULTY">Faculty</option>
-                    </select>
-                  </div>
-
-                  <div className="mb-3">
-                    <button className="btn btn-primary w-100" type="submit" disabled={loading}>
-                      {loading ? "Logging in..." : "Sign in"}
-                    </button>
-                  </div>
-                </form>
-
-                {/* <p className="text-center">
-                  <span>New here?</span>
-                  <Link href="/register"><span>&nbsp;Create an account</span></Link>
-                </p> */}
-
+            <div className="mb-4">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="••••••••"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+                <span
+                  className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-500"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  <i className={`bx ${showPassword ? "bx-hide" : "bx-show"}`}></i>
+                </span>
+              </div>
+              <div className="text-right mt-1">
+                <Link href="/forgot-password" className="text-sm text-blue-600 hover:underline">
+                  Forgot password?
+                </Link>
               </div>
             </div>
-          </div>
+
+            <div className="mb-4">
+              <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
+                Role
+              </label>
+              <select
+                name="role"
+                id="role"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={formData.role}
+                onChange={handleChange}
+              >
+                <option value="ADMIN">Admin</option>
+                <option value="HOD">HOD</option>
+                <option value="FACULTY">Faculty</option>
+              </select>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-60"
+            >
+              {loading ? "Logging in..." : "Sign in"}
+            </button>
+          </form>
         </div>
       </div>
     </>
-    
   );
 }
