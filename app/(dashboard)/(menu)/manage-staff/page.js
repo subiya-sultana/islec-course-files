@@ -5,38 +5,6 @@ import { useState, useRef, useEffect } from "react";
 import ActionButton from "@/components/ActionButton";
 import DeleteConfirmationModal from "@/components/DeleteConfirmationModal";
 
-const dummyStaff = [
-  {
-    id: 1,
-    name: "Alice Johnson",
-    email: "alice@example.com",
-    role: "ADMIN",
-    departments: ["HR", "Finance"],
-  },
-  {
-    id: 2,
-    name: "Bob Smith",
-    email: "bob@example.com",
-    role: "HOD",
-    departments: ["Computer Science"],
-  },
-  {
-    id: 3,
-    name: "Carol White",
-    email: "carol@example.com",
-    role: "FACULTY",
-    departments: ["Mathematics", "Physics"],
-  },
-  {
-    id: 4,
-    name: "Jack Smith",
-    email: "jack@example.com",
-    role: "HOD",
-    departments: ["Computer Science"],
-  },
-];
-
-// Role priority for sorting
 const rolePriority = {
   ADMIN: 1,
   HOD: 2,
@@ -52,7 +20,7 @@ const columns = [
 ];
 
 export default function ManageStaff() {
-  const [staff, setStaff] = useState(dummyStaff);
+  const [staff, setStaff] = useState([]);
   const [sortBy, setSortBy] = useState("role");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -60,16 +28,30 @@ export default function ManageStaff() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
+  // Fetch staff on load
+  useEffect(() => {
+    const fetchStaff = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_DOMAIN}/api/user`);
+        const data = await res.json();
+        setStaff(data); // assume data is an array
+      } catch (error) {
+        console.error("Failed to fetch staff", error);
+      }
+    };
+    fetchStaff();
+  }, []);
+
   const sortStaff = (data, criteria) => {
     const sorted = [...data];
     if (criteria === "role") {
-      sorted.sort((a, b) => rolePriority[a.role] - rolePriority[b.role]);
+      sorted.sort((a, b) => rolePriority[a.role.toUpperCase()] - rolePriority[b.role.toUpperCase()]);
     } else if (criteria === "name") {
       sorted.sort((a, b) => a.name.localeCompare(b.name));
     } else if (criteria === "departments") {
       sorted.sort((a, b) => {
-        const deptA = a.departments[0] || "";
-        const deptB = b.departments[0] || "";
+        const deptA = (a.departments?.[0]?.name || a.departments?.[0] || "").toLowerCase();
+        const deptB = (b.departments?.[0]?.name || b.departments?.[0] || "").toLowerCase();
         return deptA.localeCompare(deptB);
       });
     }
@@ -105,8 +87,19 @@ export default function ManageStaff() {
     };
   }, [dropdownOpen]);
 
-  const handleDeleteConfirmed = () => {
-    setStaff((prev) => prev.filter((u) => u.id !== selectedUser.id));
+  const handleDeleteConfirmed = async () => {
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_SERVER_DOMAIN}/api/user`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: selectedUser._id }),
+      });
+      setStaff((prev) => prev.filter((u) => u._id !== selectedUser._id));
+    } catch (error) {
+      console.error("Delete failed", error);
+    }
     setIsDeleteModalOpen(false);
     setSelectedUser(null);
   };
@@ -114,17 +107,21 @@ export default function ManageStaff() {
   const sortedStaff = sortStaff(staff, sortBy);
 
   const renderRow = (user) => (
-    <tr key={user.id} className="border-b hover:bg-gray-100">
+    <tr key={user._id} className="border-b hover:bg-gray-100">
       <td className="p-2">{user.name}</td>
       <td className="p-2">{user.email}</td>
       <td className="p-2 uppercase">{user.role}</td>
-      <td className="p-2">{user.departments.join(", ")}</td>
+      <td className="p-2">
+        {user.departments
+          ?.map((dept) => (typeof dept === "string" ? dept : dept.name))
+          .join(", ")}
+      </td>
       <td className="p-2 flex gap-4 text-xl">
         <ActionButton
           iconClass="bx bx-show"
           title="View Profile"
           asLink
-          href={`/manage-staff/${user.id}`}
+          href={`/manage-staff/${user._id}`}
           color="blue"
         />
         <ActionButton
@@ -176,36 +173,19 @@ export default function ManageStaff() {
                 tabIndex={-1}
                 className="absolute right-0 mt-2 w-40 bg-white border border-gray-300 rounded shadow-md z-10"
               >
-                <li
-                  role="option"
-                  tabIndex={0}
-                  className={`px-4 py-2 cursor-pointer hover:bg-blue-100 ${
-                    sortBy === "role" ? "font-semibold bg-blue-50" : ""
-                  }`}
-                  onClick={() => handleSortChange("role")}
-                >
-                  Role
-                </li>
-                <li
-                  role="option"
-                  tabIndex={0}
-                  className={`px-4 py-2 cursor-pointer hover:bg-blue-100 ${
-                    sortBy === "name" ? "font-semibold bg-blue-50" : ""
-                  }`}
-                  onClick={() => handleSortChange("name")}
-                >
-                  Name
-                </li>
-                <li
-                  role="option"
-                  tabIndex={0}
-                  className={`px-4 py-2 cursor-pointer hover:bg-blue-100 ${
-                    sortBy === "departments" ? "font-semibold bg-blue-50" : ""
-                  }`}
-                  onClick={() => handleSortChange("departments")}
-                >
-                  Departments
-                </li>
+                {["role", "name", "departments"].map((item) => (
+                  <li
+                    key={item}
+                    role="option"
+                    tabIndex={0}
+                    className={`px-4 py-2 cursor-pointer hover:bg-blue-100 ${
+                      sortBy === item ? "font-semibold bg-blue-50" : ""
+                    }`}
+                    onClick={() => handleSortChange(item)}
+                  >
+                    {item.charAt(0).toUpperCase() + item.slice(1)}
+                  </li>
+                ))}
               </ul>
             )}
           </div>
@@ -230,7 +210,7 @@ export default function ManageStaff() {
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleDeleteConfirmed}
         title="Confirm Staff Deletion"
-        message={`Are you sure you want to delete the staff name "${selectedUser?.name}"?`}
+        message={`Are you sure you want to delete the staff "${selectedUser?.name}"?`}
       />
     </div>
   );
